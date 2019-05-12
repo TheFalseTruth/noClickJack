@@ -1,0 +1,51 @@
+{
+    "author": "Group 3 noClickJacking",
+    "background": {
+        "page": "background.html",
+        "persistent": true
+    },
+    "browser_action": {
+        "default_icon": {
+            "96": "Icon/MainIcon.png"
+        },
+        "default_popup": "popup.html",
+        "default_title": "NoClickjack"
+    },
+    "content_scripts": [
+        {
+            "all_frames": true,
+            "js": [
+                "content.js"
+            ],
+            "match_about_blank": true,
+            "matches": [
+                "*://*/*",
+                "http://*/*",
+                "https://*/*"
+            ]
+        }
+    ],
+    "description": "Shows clickjack attempts and displays CryptoColor® indicator when enabled",
+    "homepage_url": "https://fb.com/Wei.Huy.Nguyen",
+    "icons": {
+        "96": "Icon/MainIcon.png"
+    },
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApMVYBXuurRYk9u8Qk2X5En9VVWyCr8CnPI3NtvClzGPBM+6JLeQ/CaNzcWFySvMf4YIg4uJCzUBi1De7GFphEJ+xt3UXid0h0HiojiBh4cAaK913YF4+OGEzf5TJ4sYeOYp0QalZc6MyFkjI0qrC2JCS1ynnZQRm6rJZR0RYvMgqpSTtP1ko2WVqDozWE61pZc5HgxFOvGUsrlJpiGfwhmXLN/6zuhOk4TYzqCA4i/0z5O6T/i50WtT+NBCJilo/CZGZqvQ9xQolfClbAAbepBbBydH/KqIkZp1ttzRL7KSsO5+E+wXVY3zFFklP3TDfasT3P9MhFFmP4toW3N/ZQQIDAQAB",
+    "manifest_version": 2,
+    "name": "NoClickjack",
+    "permissions": [
+        "management",
+        "storage",
+        "downloads",
+        "tabs",
+        "webNavigation",
+        "webRequest",
+        "webRequestBlocking",
+        "*://*/*",
+        "http://*/*",
+        "https://*/*"
+    ],
+    "short_name": "NoClickjack",
+    "update_url": "https://clients2.google.com/service/update2/crx",
+    "version": "2019.4.23.1"
+}

@@ -1,68 +1,75 @@
-// Get all element in the doc
 const ElementList = document.querySelectorAll("*");
-var listIframe = [];
-
-console.log(document);
-
-// function ProcessIframe(frame){
-//     var elements = frame.contentWindow.document.querySelectorAll("*");
-//     if(elements.length < 1) return;
-
-//     for(var i = 0; i < elements.length; i ++ ){
-//         if(elements[i].tagName.toUpperCase() == "IFRAME"){
-//             console.log(elements[i]);
-
-//             ProcessFrame(elements[i]);
-//             ProcessIframe(elements[i]);
-//         }else{
-//             ProcessElement(elements[i]);
-//         }
-//     }
-// }
+const iframeList = document.getElementsByTagName('iframe');
+var tagNameList = ['button', 'input', 'a', 'div'];
+// console.log(document);
 
 function ProcessFrame(frame) {
     frame.style.opacity = 1;
     frame.style.border = "3px dashed red";
-    console.log("IFRAME DETECTED");
+    console.log("iframe detected");
 
 }
 
-function ProcessElement(element){
+function ProcessElement(element) {
     const style = getComputedStyle(element);
-    if (element.tagName.toLowerCase() == "button" && getOpacity(style) < 0.2) {
-        // console.log('found' + element);
-        element.style.border = "3px dashed blue";
+    // console.log(style);
+    const elementTagName = element.tagName.toLowerCase();
+    if (tagNameList.includes(elementTagName) == true) {
+        if (elementTagName == 'a' &&
+                (getOpacity(style.color) < 0.2 || style.zIndex >= 1)) {
+            element.style.border = "3px dashed blue";
+        }
+        else if (elementTagName == 'div' && 
+                    (getOpacity(style.color) < 0.2 || style.zIndex >= 1)) {
+            element.style.border = "3px dashed blue";
+        }
+        else if (elementTagName == 'button' && getOpacity(style.backgroundColor) < 0.2) {
+            element.style.border = "3px dashed blue";
+        } 
+        else if (elementTagName == 'input' && 
+                    (getBorder(style.border)[0] < 0.2 || style.zIndex >= 1)
+                    && getOpacity(style.backgroundColor) < 0.2) {
+            element.style.border = "3px dashed blue";
+        }
     }
 }
 
+
 function getOpacity(style) {
-    var string = style.backgroundColor.replace(/\s/g, '');
+    var string = style.replace(/\s/g, '');
     string = string.split(",");
 
     if (!string[3]) return 1;
 
-    // console.log(string);
     string = string[3].slice(0, -1);
-    
+
     return string;
 }
 
-function isInIframe(element){
+function getBorder(style) {
+    const border = style
+        .match(/\d+\.\d+|\d+\b|\d+(?=\w)/g)
+        .map(function (v) { return +v; }); //=> [4567, 4, 2.12, 67]
+    return border;
+}
+
+function isInIframe(element) {
     if (element.ownerDocument !== document) {
         return true;
     }
     else return false;
 }
 
-for (var i = 0; i < ElementList.length; i++) {
-    if (ElementList[i].tagName.toUpperCase() == "IFRAME") {
-        listIframe.push(ElementList[i]); // Store "iframe" element
-        ProcessFrame(ElementList[i]);
-    } else {
-        if (ElementList[i].ownerDocument !== document) {
-            console.log("This " + ElementList[i] + " is in iframe");
-            continue;
+
+if (iframeList.length != 0) {
+    for (var i = 0; i < ElementList.length; i++) {
+        if (ElementList[i].tagName.toLowerCase() == "iframe") {
+            ProcessFrame(ElementList[i]);
+        } else {
+            ProcessElement(ElementList[i]);
         }
-        else ProcessElement(ElementList[i]);
     }
+}
+else {
+    console.log("No iframe found!");
 }

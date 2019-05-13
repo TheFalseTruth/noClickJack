@@ -1,3 +1,6 @@
+var CJ_INDEX = 5;
+var CJ_OPACITY = 0.2; 
+
 const ElementList = document.querySelectorAll("*");
 const iframeList = document.getElementsByTagName('iframe');
 var tagNameList = ['button', 'input', 'a', 'div'];
@@ -16,19 +19,20 @@ function ProcessElement(element) {
     const elementTagName = element.tagName.toLowerCase();
     if (tagNameList.includes(elementTagName) == true) {
         if (elementTagName == 'a' &&
-                (getOpacity(style.color) < 0.2 || style.zIndex >= 1)) {
+                (getOpacity(style.color) < CJ_OPACITY || style.zIndex >= CJ_INDEX)) {
             element.style.border = "3px dashed blue";
         }
         else if (elementTagName == 'div' && 
-                    (getOpacity(style.color) < 0.2 || style.zIndex >= 1)) {
+                    (getOpacity(style.color) < CJ_OPACITY || style.zIndex >= CJ_INDEX)) {
             element.style.border = "3px dashed blue";
         }
-        else if (elementTagName == 'button' && getOpacity(style.backgroundColor) < 0.2) {
+        else if (elementTagName == 'button' && 
+                    (getOpacity(style.backgroundColor) < CJ_OPACITY || style.zIndex >= CJ_INDEX)) {
             element.style.border = "3px dashed blue";
         } 
         else if (elementTagName == 'input' && 
-                    (getBorder(style.border)[0] < 0.2 || style.zIndex >= 1)
-                    && getOpacity(style.backgroundColor) < 0.2) {
+                    (getBorder(style.border)[0] < CJ_OPACITY || style.zIndex >= CJ_INDEX)
+                    && getOpacity(style.backgroundColor) < CJ_OPACITY) {
             element.style.border = "3px dashed blue";
         }
     }

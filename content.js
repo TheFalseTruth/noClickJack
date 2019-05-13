@@ -1,4 +1,4 @@
-var CJ_INDEX = 5;
+var CJ_INDEX = 10;
 var CJ_OPACITY = 0.2; 
 
 const ElementList = document.querySelectorAll("*");
@@ -22,8 +22,9 @@ function ProcessElement(element) {
                 (getOpacity(style.color) < CJ_OPACITY || style.zIndex >= CJ_INDEX)) {
             element.style.border = "3px dashed blue";
         }
-        else if (elementTagName == 'div' && 
+        else if (elementTagName == 'div' && element.hasAttribute('a') &&
                     (getOpacity(style.color) < CJ_OPACITY || style.zIndex >= CJ_INDEX)) {
+            console.log(style.color);
             element.style.border = "3px dashed blue";
         }
         else if (elementTagName == 'button' && 
